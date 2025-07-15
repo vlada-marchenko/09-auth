@@ -1,14 +1,14 @@
 'use client'
 
-import css from '../../../../app/page.module.css'
-import NoteList from '../../../../components/NoteList/NoteList'
-import SearchBox from '../../../../components/SearchBox/SearchBox'
-import Pagination from '../../../../components/Pagination/Pagination'
+import css from '../../../../../app/page.module.css'
+import NoteList from '../../../../../components/NoteList/NoteList'
+import SearchBox from '../../../../../components/SearchBox/SearchBox'
+import Pagination from '../../../../../components/Pagination/Pagination'
 import { useEffect, useState } from 'react'
 import {  useQuery } from '@tanstack/react-query'
-import { fetchNotes, type HttpResponse } from '../../../../lib/api'
+import { fetchNotes, type HttpResponse } from '../../../../../lib/clientApi'
 import { useDebounce } from 'use-debounce'
-import { Note } from '../../../../types/note'
+import { Note } from '../../../../../types/note'
 import Link from 'next/link'
 
 

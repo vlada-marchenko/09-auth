@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import css from './Header.module.css'
 import dynamic from 'next/dynamic'
+import AuthNavigation from '../AuthNavigation/AuthNavigation'
 
 const TagsMenu = dynamic(() => import('../TagsMenu/TagsMenu'))
 
@@ -18,6 +19,7 @@ const Header = () => {
           <li>
           <TagsMenu />
           </li>
+          <AuthNavigation />
         </ul>
       </nav>
     </header>

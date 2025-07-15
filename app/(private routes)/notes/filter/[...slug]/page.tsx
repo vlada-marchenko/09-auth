@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
-import { fetchNotes } from '../../../../lib/api';
-import css from '../../../page.module.css';
+import { fetchNotes } from '../../../../../lib/clientApi';
+import css from '../../../../page.module.css';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props ): Promise<Metadata> {
     openGraph: {
       title: `${filter} notes`,
       description: `Notes filtered by ${filter}.`,
-      url: `https://08-zustand-five.vercel.app/notes/filter/${filter}`,
+      url: `http://localhost:3000/filter/${filter}`,
       images: [{
       url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
       width: 1200,
