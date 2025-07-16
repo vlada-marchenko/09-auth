@@ -1,6 +1,6 @@
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query'
 import { QueryClient } from '@tanstack/react-query'
-import { fetchNoteById } from '../../../../lib/clientApi'
+import { fetchNoteById } from '../../../../lib/api/clientApi'
 import NotePreview from './NotePreview.client'
 
 export default async function NoteModalPage({

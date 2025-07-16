@@ -1,8 +1,10 @@
 export const dynamic = 'force-dynamic';
-import { fetchNotes } from '../../../../../lib/clientApi';
+import { redirect } from 'next/navigation';
+import { fetchNotes } from '../../../../../lib/api/clientApi';
 import css from '../../../../page.module.css';
 import NotesClient from './Notes.client';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 
 type Props = {
   params: Promise<{slug?: string[]}>
@@ -34,7 +36,12 @@ export default async function NotesPage({
 }: {
   params: Promise<{ slug: string[] }>;
 }) {
+  const cookiesStore = await cookies();
+  const accessToken = cookiesStore.get('accessToken')?.value || '';
 
+  if(!accessToken) {
+    redirect('/login');
+  }
   const { slug } = await params;
 
   const initialSearch = '';

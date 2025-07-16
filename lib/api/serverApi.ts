@@ -1,5 +1,5 @@
 import { nextServer } from "./api";
-import User from "../types/user";
+import User from "../../types/user";
 import { cookies } from "next/headers";
 import { CheckSessionRequest } from "./clientApi";
 

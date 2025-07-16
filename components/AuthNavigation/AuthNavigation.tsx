@@ -4,7 +4,7 @@ import css from './AuthNavigation.module.css';
 import Link from 'next/link';
 import { useAuth } from '../../lib/store/authStore';
 import { useRouter } from 'next/navigation';
-import { logOut } from '../../lib/clientApi';
+import { logOut } from '../../lib/api/clientApi';
 
 const AuthNavigation = () => {
 const user = useAuth(state => state.user)

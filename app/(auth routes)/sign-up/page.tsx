@@ -1,7 +1,7 @@
 'use client'
 
 import css from './SignUpPage.module.css';
-import { register, RegisterRequest } from '../../../lib/clientApi';
+import { register, RegisterRequest } from '../../../lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -9,25 +9,36 @@ const SignUp = () => {
     const router = useRouter();
     const [error, setError] = useState('')
 
-    const handleSubmit = async (formData: FormData) => {
-        try {
-            const formValues = Object.fromEntries(formData) as unknown as RegisterRequest
-            const res = await register(formValues)
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-            if(res) {
-                router.push('/profile')
-            } else {
-                setError('Registration failed. Please try again.')
-            }
-        } catch (err) {
-            console.error('Registration error:', err);
-        }
+    const form = new FormData(e.currentTarget);
+    const formValues = {
+      email: form.get('email') as string,
+      password: form.get('password') as string,
+    } as RegisterRequest;
+
+    try {
+      const user = await register(formValues); 
+      if (user) {
+        router.push('/profile');
+      } else {
+        setError('Registration failed. Please try again.');
+      }
+    } catch (err: unknown) {
+      console.error('Registration error:', err);
+      if (err instanceof Error) {
+        setError(err.message || 'Registration failed.');
+      } else {
+        setError('Registration failed.');
+      }
     }
+  };
 
     return (
         <main className={css.mainContent}>
   <h1 className={css.formTitle}>Sign up</h1>
-	<form className={css.form} action={handleSubmit}>
+	<form className={css.form} onSubmit={handleSubmit}>
     <div className={css.formGroup}>
       <label htmlFor="email">Email</label>
       <input id="email" type="email" name="email" className={css.input} required />

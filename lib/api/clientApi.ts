@@ -1,6 +1,6 @@
-import type { Note } from '../types/note'
+import type { Note } from '../../types/note'
 import { nextServer } from './api'
-import User from '../types/user'
+import User from '../../types/user'
 
 export interface FetchParams {
     search?: string,
