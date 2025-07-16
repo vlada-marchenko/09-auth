@@ -8,22 +8,17 @@ import { useEffect, useState } from 'react'
 import {  useQuery } from '@tanstack/react-query'
 import { fetchNotes, type HttpResponse } from '../../../../../lib/api/clientApi'
 import { useDebounce } from 'use-debounce'
-import { Note } from '../../../../../types/note'
 import Link from 'next/link'
 
 
 
 type Props = {
-  initialNotes: Note[],
-  initialPage: number,
-  initialSearch: string
-  initialTotalPages: number
   tag: string
 }
 
-const NotesClient = ({ initialNotes, initialPage, initialSearch, initialTotalPages, tag }: Props) => {
-  const [page, setPage] = useState(initialPage)
-  const [search, setSearch] = useState(initialSearch || '')
+const NotesClient = ({ tag }: Props) => {
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('')
   const [debouncedSearch] = useDebounce(search, 400)
   const perPage = 12
 
@@ -32,7 +27,6 @@ const NotesClient = ({ initialNotes, initialPage, initialSearch, initialTotalPag
   const { data, isLoading, error } = useQuery<HttpResponse, Error>({
 	queryKey: ['notes', page, debouncedSearch, tag] ,
   queryFn: () => fetchNotes({ search: debouncedSearch, page, perPage, tag }),
-  initialData: { notes: initialNotes, totalPages: initialTotalPages },
   refetchOnWindowFocus: false,
   placeholderData: (prev) => prev
   });

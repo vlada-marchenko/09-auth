@@ -1,11 +1,11 @@
 'use client'
 
 import css from "./NoteDetails.module.css"
-import { fetchNoteById } from "../../../lib/api"
+import { fetchNoteById } from "../../../../lib/api/clientApi"
 import { useQuery } from "@tanstack/react-query"
 
 type Props = {
-    noteId: number
+    noteId: string
 }
 
 const NoteDetailsClient = ({ noteId }: Props) => {

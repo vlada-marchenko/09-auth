@@ -11,6 +11,7 @@ const user = useAuth(state => state.user)
 const isAuth = useAuth(state => state.isAuth)
 const clearUser = useAuth(state => state.clearUser)
   const router = useRouter()
+  
 
     const handleLogOut = async () => {
     await logOut()
@@ -18,9 +19,11 @@ const clearUser = useAuth(state => state.clearUser)
     router.replace('/sign-in')
   }
 
+      console.log(isAuth)
+
     return (
-      <ul>
-        {isAuth ? (
+     
+        isAuth ? (
           <>
             <li className={css.navigationItem}>
               <Link href="/profile" prefetch={false} className={css.navigationLink}>
@@ -47,9 +50,10 @@ const clearUser = useAuth(state => state.clearUser)
               </Link>
             </li>
           </>
-        )}
-      </ul>
+        )
+ 
     );
-}
+
+  }
 
 export default AuthNavigation;

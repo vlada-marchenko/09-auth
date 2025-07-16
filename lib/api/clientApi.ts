@@ -2,6 +2,7 @@ import type { Note } from '../../types/note'
 import { nextServer } from './api'
 import User from '../../types/user'
 
+
 export interface FetchParams {
     search?: string,
     tag?: string,
@@ -36,7 +37,9 @@ export interface CheckSessionRequest {
     success: boolean;
 }
 
-
+export interface UpdateUserRequest {
+    username?: string;
+}
 
 
 export async function fetchNotes({search = '', page = 1, tag = '', perPage = 12}: FetchParams): Promise <HttpResponse> {
@@ -49,7 +52,7 @@ export async function fetchNotes({search = '', page = 1, tag = '', perPage = 12}
 }
 
 
-export async function fetchNoteById(id:number): Promise <Note> {
+export async function fetchNoteById(id:string): Promise <Note> {
     const { data } = await nextServer<Note>(`/notes/${id}`);
     return data;
 }
@@ -60,7 +63,7 @@ export async function createNote({title, content, tag}: CreateParams): Promise <
     return data
 }
 
-export async function deleteNote(id: number): Promise <Note> {
+export async function deleteNote(id: string): Promise <Note> {
     const { data } = await nextServer.delete<Note>(`/notes/${id}` )
     return data
 }
@@ -76,15 +79,20 @@ export async function login(data: LoginRequest): Promise<User> {
 }
 
 export async function checkSession() {
-    const { data } = await nextServer<CheckSessionRequest>('/auth/session');
-    return data.success;
+    const response = await nextServer<CheckSessionRequest>('/auth/session');
+    return response;
 }
 
 export async function getMe() {
-    const { data } = await nextServer<User>('/users/me');
-    return data;
+    const response = await nextServer<User>('/users/me');
+    return response.data;
 }
 
 export async function logOut() {
     await nextServer.post<CheckSessionRequest>('/auth/logout');
+}
+
+export async function updateUser(data: UpdateUserRequest) {
+    const response = await nextServer.patch<User>('/users/me', data);
+    return response.data;
 }
