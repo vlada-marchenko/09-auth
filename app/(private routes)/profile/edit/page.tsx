@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { updateUser, getMe } from '../../../../lib/api/clientApi'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useAuth } from '../../../../lib/store/authStore'
 
 
 const ProfileEdit = () => {
@@ -12,6 +13,7 @@ const ProfileEdit = () => {
   const [email, setEmail] = useState('')
   const [avatar, setAvatar] = useState('')
   const router = useRouter()
+  const setUser = useAuth((state) => state.setUser)
 
     useEffect(() => {
     const fetchUser = async () => {
@@ -36,7 +38,8 @@ const ProfileEdit = () => {
   const handleSaveUser = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     try {
-    await updateUser({ username })
+    const updatedUser = await updateUser({ username })
+    setUser(updatedUser)
     router.push('/profile') 
   } catch (err) {
     console.error('Failed to update user', err)
@@ -64,7 +67,9 @@ const ProfileEdit = () => {
         <input id="username"
           type="text"
           className={css.input}
+          value={username}
           onChange={handleChange}
+          required
         />
       </div>
 
@@ -74,7 +79,7 @@ const ProfileEdit = () => {
         <button type="submit" className={css.saveButton}>
           Save
         </button>
-        <button type="button" onClick={() => router.push('/profile')} className={css.cancelButton}>
+        <button type="button" onClick={() => router.back()} className={css.cancelButton}>
           Cancel
         </button>
       </div>

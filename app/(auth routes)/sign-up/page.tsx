@@ -4,9 +4,11 @@ import css from './SignUpPage.module.css';
 import { register, RegisterRequest } from '../../../lib/api/clientApi';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuth } from '../../../lib/store/authStore';
 
 const SignUp = () => {
     const router = useRouter();
+    const setUser = useAuth((state) => state.setUser); 
     const [error, setError] = useState('')
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,6 +23,7 @@ const SignUp = () => {
     try {
       const user = await register(formValues); 
       if (user) {
+        setUser(user);
         router.push('/profile');
       } else {
         setError('Registration failed. Please try again.');

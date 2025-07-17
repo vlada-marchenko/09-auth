@@ -8,7 +8,7 @@ import { logOut } from '../../lib/api/clientApi';
 
 const AuthNavigation = () => {
 const user = useAuth(state => state.user)
-const isAuth = useAuth(state => state.isAuth)
+const isAuthenticated = useAuth(state => state.isAuthenticated)
 const clearUser = useAuth(state => state.clearUser)
   const router = useRouter()
   
@@ -19,11 +19,11 @@ const clearUser = useAuth(state => state.clearUser)
     router.replace('/sign-in')
   }
 
-      console.log(isAuth)
+      console.log(isAuthenticated)
 
     return (
      
-        isAuth ? (
+        isAuthenticated ? (
           <>
             <li className={css.navigationItem}>
               <Link href="/profile" prefetch={false} className={css.navigationLink}>

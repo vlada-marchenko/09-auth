@@ -14,8 +14,8 @@ const AuthProvider = ({ children }: Props) => {
 
     useEffect(() => {
         const fetchSession = async () => {
-            const isAuth = await checkSession()
-            if(isAuth) {
+            const isAuthenticated = await checkSession()
+            if(isAuthenticated) {
                 const user = await getMe()
                 setUser(user)
             } else {

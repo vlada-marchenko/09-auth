@@ -4,17 +4,20 @@ import css from './SignInPage.module.css'
 import { login, LoginRequest } from '../../../lib/api/clientApi'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { useAuth } from '../../../lib/store/authStore'
 
 const SignIn = () => {
     const [error, setError] = useState('')
     const router = useRouter()
+    const setUser = useAuth((state) => state.setUser);
 
         const handleSubmit = async (formData: FormData) => {
             try {
                 const formValues = Object.fromEntries(formData) as unknown as LoginRequest
-                const res = await login(formValues)
+                const user = await login(formValues)
     
-                if(res) {
+                if(user) {
+                    setUser(user)
                     router.push('/profile')
                 } else {
                     setError('Login failed. Please try again.')

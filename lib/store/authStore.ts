@@ -3,7 +3,7 @@ import  User from '../../types/user';
 import { persist } from 'zustand/middleware';
 
 export type AuthStore = {
-    isAuth: boolean;
+    isAuthenticated: boolean;
     user: User | null
     setUser: (user: User) => void
     clearUser: () => void
@@ -12,15 +12,15 @@ export type AuthStore = {
 export const useAuth = create<AuthStore>()(
     persist(
         (set) => ({
-            isAuth: false,
+            isAuthenticated: false,
             user: null,
-            setUser: (user: User) => set(() => ({ user, isAuth: true })),
-            clearUser: () => set(() => ({ user: null, isAuth: false }))
+            setUser: (user: User) => set(() => ({ user, isAuthenticated: true })),
+            clearUser: () => set(() => ({ user: null, isAuthenticated: false }))
         }),
         {
             name: 'auth-storage',
             partialize: (state: AuthStore) => ({
-                isAuth: state.isAuth,
+                isAuthenticated: state.isAuthenticated,
                 user: state.user
             }) 
         }
