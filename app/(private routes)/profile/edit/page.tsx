@@ -1,7 +1,7 @@
 'use client'
 
 import css from './EditProfilePage.module.css'
-// import Image from 'next/image'
+import Image from 'next/image'
 import { updateUser, getMe } from '../../../../lib/api/clientApi'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 const ProfileEdit = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
+  const [avatar, setAvatar] = useState('')
   const router = useRouter()
 
     useEffect(() => {
@@ -18,6 +19,7 @@ const ProfileEdit = () => {
         const user = await getMe()
         setUsername(user.username || '')
         setEmail(user.email || '')
+        setAvatar(user.avatar)
       } catch (error) {
         console.error('Failed to load user', error)
       }
@@ -46,12 +48,15 @@ const ProfileEdit = () => {
   <div className={css.profileCard}>
     <h1 className={css.formTitle}>Edit Profile</h1>
 
-    {/* <Image src="avatar"
-      alt="User Avatar"
-      width={120}
-      height={120}
-      className={css.avatar}
-    /> */}
+{avatar && (
+  <Image
+    src={avatar}
+    alt="User Avatar"
+    width={120}
+    height={120}
+    className={css.avatar}
+  />
+)}
 
     <form onSubmit={handleSaveUser} className={css.profileInfo}>
       <div className={css.usernameWrapper}>
@@ -76,8 +81,6 @@ const ProfileEdit = () => {
     </form>
   </div>
 </main>
-
-    )
-}
+    )}
 
 export default ProfileEdit;

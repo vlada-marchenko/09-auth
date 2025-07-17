@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import css from './ProfilePage.module.css';
-// import Image from 'next/image';
+import Image from 'next/image';
 import { Metadata } from 'next';
 import { getServerMe } from '../../../lib/api/serverApi';
 
@@ -34,13 +34,13 @@ const Profile = async () => {
        </Link>
 	   </div>
      <div className={css.avatarWrapper}>
-      {/* <Image
-        src="Avatar"
+       <Image
+        src={user.avatar}
         alt="User Avatar"
         width={120}
         height={120}
         className={css.avatar}
-      /> */}
+      /> 
     </div>
     <div className={css.profileInfo}>
       <p>

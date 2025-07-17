@@ -9,11 +9,13 @@ type Props = {
 export async function GET(request: Request, { params }: Props) {
   const cookieStore = await cookies();
   const { id } = await params;
+  
   const { data } = await api(`/notes/${id}`, {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
+
   if (data) {
     return NextResponse.json(data);
   }
