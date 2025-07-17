@@ -46,7 +46,6 @@ export async function fetchNotes({search = '', page = 1, tag = '', perPage = 12}
     const params: Record<string, string | number> = { page, perPage };
     if (search.trim()) params.search = search.trim();
     if (tag.trim()) params.tag = tag.trim();
-
     const { data } = await nextServer<HttpResponse>(`/notes`, { params })
     return data
 }
